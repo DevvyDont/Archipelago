@@ -7,10 +7,11 @@ import time
 import dataclasses
 from typing import Dict, List, TypedDict, Optional
 
+
 try:
-    from ..Utils import local_path, user_path
+    from ..Utils import local_path, user_path, get_script_name, get_script_path
 except ImportError:
-    from Utils import local_path, user_path
+    from Utils import local_path, user_path, get_script_name, get_script_path
 
 local_folder = os.path.dirname(__file__)
 user_folder = user_path("worlds") if user_path() != local_path() else None
@@ -56,6 +57,7 @@ class WorldSource:
         return self.path
 
     def load(self) -> bool:
+
         try:
             start = time.perf_counter()
             if self.is_zip:
@@ -93,27 +95,31 @@ class WorldSource:
             return False
 
 
-# find potential world containers, currently folders and zip-importable .apworld's
-world_sources: List[WorldSource] = []
-for folder in (folder for folder in (user_folder, local_folder) if folder):
-    relative = folder == local_folder
-    for entry in os.scandir(folder):
-        # prevent loading of __pycache__ and allow _* for non-world folders, disable files/folders starting with "."
-        if not entry.name.startswith(("_", ".")):
-            file_name = entry.name if relative else os.path.join(folder, entry.name)
-            if entry.is_dir():
-                world_sources.append(WorldSource(file_name, relative=relative))
-            elif entry.is_file() and entry.name.endswith(".apworld"):
-                world_sources.append(WorldSource(file_name, is_zip=True, relative=relative))
+# If we are running this code from a script within the Archipelago package or using a whitelisted script, continue
+__WHITE_LISTED_SCRIPTS = ('Generate.py',)
+if 'apworld/archipelago' in get_script_path() or get_script_name() in __WHITE_LISTED_SCRIPTS:
 
-# import all submodules to trigger AutoWorldRegister
-world_sources.sort()
-for world_source in world_sources:
-    world_source.load()
+    # find potential world containers, currently folders and zip-importable .apworld's
+    world_sources: List[WorldSource] = []
+    for folder in (folder for folder in (user_folder, local_folder) if folder):
+        relative = folder == local_folder
+        for entry in os.scandir(folder):
+            # prevent loading of __pycache__ and allow _* for non-world folders, disable files/folders starting with "."
+            if not entry.name.startswith(("_", ".")):
+                file_name = entry.name if relative else os.path.join(folder, entry.name)
+                if entry.is_dir():
+                    world_sources.append(WorldSource(file_name, relative=relative))
+                elif entry.is_file() and entry.name.endswith(".apworld"):
+                    world_sources.append(WorldSource(file_name, is_zip=True, relative=relative))
 
-# Build the data package for each game.
-from .AutoWorld import AutoWorldRegister
+    # import all submodules to trigger AutoWorldRegister
+    world_sources.sort()
+    for world_source in world_sources:
+        world_source.load()
 
-network_data_package: DataPackage = {
-    "games": {world_name: world.get_data_package_data() for world_name, world in AutoWorldRegister.world_types.items()},
-}
+    # Build the data package for each game.
+    from .AutoWorld import AutoWorldRegister
+
+    network_data_package: DataPackage = {
+        "games": {world_name: world.get_data_package_data() for world_name, world in AutoWorldRegister.world_types.items()},
+    }

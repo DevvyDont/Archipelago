@@ -981,3 +981,19 @@ def is_iterable_except_str(obj: object) -> TypeGuard[typing.Iterable[typing.Any]
     if isinstance(obj, str):
         return False
     return isinstance(obj, typing.Iterable)
+
+
+# Returns the directory of which this script was ran via command line arguments ignoring unnecessary cwd
+def get_script_path() -> str:
+    cwd = os.getcwd().replace('\\', '/')
+    exec_cmd_arg = sys.argv[0]
+    exec_cmd_arg = exec_cmd_arg.replace('\\', '/')  # Replace windows slashes with real slashes
+    relative_exec_path = exec_cmd_arg.removeprefix(cwd)
+    return relative_exec_path
+
+
+# Returns the name of the script that is running this program. For example, if you run Generate.py, you will receive
+# 'Generate.py'
+def get_script_name() -> str:
+    *packages, script = get_script_path().split('/')
+    return script
