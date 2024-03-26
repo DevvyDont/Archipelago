@@ -2,7 +2,12 @@ import random
 import enum
 from dataclasses import dataclass
 from typing import Optional, List
-from BaseClasses import ItemClassification
+
+try:
+    from ...BaseClasses import ItemClassification
+except ImportError:
+    from BaseClasses import ItemClassification
+
 from . import consts
 
 

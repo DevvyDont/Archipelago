@@ -2,7 +2,11 @@ from dataclasses import dataclass, field
 from enum import IntEnum, Enum, auto
 from typing import List, Dict
 
-from BaseClasses import LocationProgressType
+try:
+    from ...BaseClasses import LocationProgressType
+except ImportError:
+    from BaseClasses import LocationProgressType
+
 from . import consts
 from .regions import ToontownRegionName
 from .rules import Rule, ItemRule

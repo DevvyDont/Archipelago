@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 
-from Options import PerGameCommonOptions, StartInventoryPool, Range, Choice, Toggle
+try:
+    from ...Options import PerGameCommonOptions, StartInventoryPool, Range, Choice, Toggle
+except ImportError:
+    from Options import PerGameCommonOptions, StartInventoryPool, Range, Choice, Toggle
 
 
 class StartLaffOption(Range):

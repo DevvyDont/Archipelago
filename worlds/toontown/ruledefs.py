@@ -1,6 +1,10 @@
 from typing import Dict, Callable, Any, Tuple, Union
 
-from BaseClasses import CollectionState, MultiWorld
+try:
+    from ...BaseClasses import CollectionState, MultiWorld
+except ImportError:
+    from BaseClasses import CollectionState, MultiWorld
+
 from .consts import XP_RATIO_FOR_GAG_LEVEL, ToontownItem
 from .fish import LOCATION_TO_GENUS_SPECIES, FISH_DICT, FishProgression, FishLocation, get_catchable_fish, LOCATION_TO_GENUS, FISH_ZONE_TO_LICENSE, FishZone, FISH_ZONE_TO_REGION
 from .items import ToontownItemName

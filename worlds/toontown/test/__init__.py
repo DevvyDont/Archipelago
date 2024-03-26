@@ -1,4 +1,4 @@
-from test.bases import WorldTestBase
+from ....test.bases import WorldTestBase
 from .. import locations
 
 
@@ -32,54 +32,54 @@ class ToontownTestPlaygroundAccess(ToontownTestBase):
 
 class TestFacilityAccess(ToontownTestBase):
     def test_facility_access(self):
-        self.assertAccessDependency([CLEAR_FRONT_FACTORY], [["Front Factory Key"]])
-        self.assertAccessDependency([CLEAR_SIDE_FACTORY], [["Side Factory Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_FRONT_FACTORY.value], [["Front Factory Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_SIDE_FACTORY.value], [["Side Factory Key"]])
 
-        self.assertAccessDependency([CLEAR_COIN_MINT], [["Coin Mint Key"]])
-        self.assertAccessDependency([CLEAR_DOLLAR_MINT], [["Dollar Mint Key"]])
-        self.assertAccessDependency([CLEAR_BULLION_MINT], [["Bullion Mint Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_COIN_MINT.value], [["Coin Mint Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_DOLLAR_MINT.value], [["Dollar Mint Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_BULLION_MINT.value], [["Bullion Mint Key"]])
 
-        self.assertAccessDependency([CLEAR_A_OFFICE], [["A Office Key"]])
-        self.assertAccessDependency([CLEAR_B_OFFICE], [["B Office Key"]])
-        self.assertAccessDependency([CLEAR_C_OFFICE], [["C Office Key"]])
-        self.assertAccessDependency([CLEAR_D_OFFICE], [["D Office Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_A_OFFICE.value], [["A Office Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_B_OFFICE.value], [["B Office Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_C_OFFICE.value], [["C Office Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_D_OFFICE.value], [["D Office Key"]])
 
-        self.assertAccessDependency([CLEAR_FRONT_THREE], [["Front One Key"]])
-        self.assertAccessDependency([CLEAR_MIDDLE_THREE], [["Middle Two Key"]])
-        self.assertAccessDependency([CLEAR_BACK_THREE], [["Back Three Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_FRONT_ONE.value], [["Front One Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_MIDDLE_TWO.value], [["Middle Two Key"]])
+        self.assertAccessDependency([locations.ToontownLocationName.CLEAR_BACK_THREE.value], [["Back Three Key"]])
 
 class TestBossAccess(ToontownTestBase):
 
     def test_boss_access(self):
-        self.assertFalse(self.can_reach_location(locations.CLEAR_VP))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.SELLBOT_PROOF.value))
         self.collect_by_name(["Sellbot Disguise"])
-        self.assertTrue(self.can_reach_location(locations.CLEAR_VP))
+        self.assertTrue(self.can_reach_location(locations.ToontownLocationName.SELLBOT_PROOF.value))
 
-        self.assertFalse(self.can_reach_location(locations.CLEAR_CFO))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.CASHBOT_PROOF.value))
         self.collect_by_name(["Cashbot Disguise"])
-        self.assertTrue(self.can_reach_location(locations.CLEAR_CFO))
+        self.assertTrue(self.can_reach_location(locations.ToontownLocationName.CASHBOT_PROOF.value))
 
-        self.assertFalse(self.can_reach_location(locations.CLEAR_CJ))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.LAWBOT_PROOF.value))
         self.collect_by_name(["Lawbot Disguise"])
-        self.assertTrue(self.can_reach_location(locations.CLEAR_CJ))
+        self.assertTrue(self.can_reach_location(locations.ToontownLocationName.LAWBOT_PROOF.value))
 
-        self.assertFalse(self.can_reach_location(locations.CLEAR_CEO))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.BOSSBOT_PROOF.value))
         self.collect_by_name(["Bossbot Disguise"])
-        self.assertTrue(self.can_reach_location(locations.CLEAR_CEO))
+        self.assertTrue(self.can_reach_location(locations.ToontownLocationName.BOSSBOT_PROOF.value))
 
     def test_victory_condition(self):
 
-        self.assertFalse(self.can_reach_location(SAVED_TOONTOWN))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.value))
         self.collect_by_name(["Sellbot Disguise"])
         self.collect_by_name(["Sellbot Proof"])
-        self.assertFalse(self.can_reach_location(SAVED_TOONTOWN))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.value))
         self.collect_by_name(["Cashbot Proof"])
         self.collect_by_name(["Cashbot Disguise"])
-        self.assertFalse(self.can_reach_location(SAVED_TOONTOWN))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.value))
         self.collect_by_name(["Lawbot Proof"])
         self.collect_by_name(["Lawbot Disguise"])
-        self.assertFalse(self.can_reach_location(SAVED_TOONTOWN))
+        self.assertFalse(self.can_reach_location(locations.ToontownLocationName.value))
         self.collect_by_name(["Bossbot Proof"])
         self.collect_by_name(["Bossbot Disguise"])
 
-        self.assertTrue(self.can_reach_location(SAVED_TOONTOWN))
+        self.assertTrue(self.can_reach_location(locations.ToontownLocationName.value))

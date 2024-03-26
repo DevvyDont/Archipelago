@@ -1,7 +1,16 @@
 from typing import Dict, Any, List
 
-from ...BaseClasses import Tutorial, Region, ItemClassification, Location, LocationProgressType
-from ...worlds.AutoWorld import World, WebWorld
+# If running with ttap/apworld/archipelago as the CWD, these may not work.
+# First, attempt to relatively import them (This should not fail if ttap is the CWD.)
+# If this fails, the CWD is probably ttap/apworld/archipelago
+try:
+    from ...BaseClasses import Tutorial, Region, ItemClassification, Location, LocationProgressType
+    from ...worlds.AutoWorld import World, WebWorld
+except ImportError:
+    print("Failed to relatively import top level archipelago modules. Attempting to import assuming archipelago is the current working directory...")
+    from BaseClasses import Tutorial, Region, ItemClassification, Location, LocationProgressType
+    from worlds.AutoWorld import World, WebWorld
+
 
 from . import regions, consts
 from .consts import ToontownItem, ToontownLocation

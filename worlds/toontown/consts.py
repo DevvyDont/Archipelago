@@ -1,7 +1,11 @@
 """
 Constants for Archipelago generation.
 """
-from BaseClasses import Item, Location
+
+try:
+    from ...BaseClasses import Item, Location
+except ImportError:
+    from BaseClasses import Item, Location
 
 BASE_ID = 0x501100
 
