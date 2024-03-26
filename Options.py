@@ -12,7 +12,10 @@ from dataclasses import dataclass
 
 from schema import And, Optional, Or, Schema
 
-from Utils import get_fuzzy_results, is_iterable_except_str
+try:
+    from .Utils import get_fuzzy_results, is_iterable_except_str
+except ImportError:
+    from Utils import get_fuzzy_results, is_iterable_except_str
 
 if typing.TYPE_CHECKING:
     from BaseClasses import PlandoOptions

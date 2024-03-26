@@ -14,9 +14,14 @@ from enum import IntEnum, IntFlag
 from typing import Any, Callable, Dict, Iterable, Iterator, List, NamedTuple, Optional, Set, Tuple, TypedDict, Union, \
     Type, ClassVar
 
-import NetUtils
-import Options
-import Utils
+try:
+    from . import NetUtils
+    from . import Options
+    from . import Utils
+except ImportError:
+    import NetUtils
+    import Options
+    import Utils
 
 if typing.TYPE_CHECKING:
     from worlds import AutoWorld

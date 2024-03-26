@@ -11,8 +11,12 @@ from dataclasses import make_dataclass
 from typing import (Any, Callable, ClassVar, Dict, FrozenSet, List, Mapping,
                     Optional, Set, TextIO, Tuple, TYPE_CHECKING, Type, Union)
 
-from Options import PerGameCommonOptions
-from BaseClasses import CollectionState
+try:
+    from ..Options import PerGameCommonOptions
+    from ..BaseClasses import CollectionState
+except ImportError:
+    from Options import PerGameCommonOptions
+    from BaseClasses import CollectionState
 
 if TYPE_CHECKING:
     import random

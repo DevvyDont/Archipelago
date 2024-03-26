@@ -7,7 +7,10 @@ from json import JSONEncoder, JSONDecoder
 
 import websockets
 
-from Utils import ByValue, Version
+try:
+    from .Utils import ByValue, Version
+except ImportError:
+    from Utils import ByValue, Version
 
 
 class JSONMessagePart(typing.TypedDict, total=False):

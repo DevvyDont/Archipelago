@@ -7,7 +7,10 @@ import time
 import dataclasses
 from typing import Dict, List, TypedDict, Optional
 
-from Utils import local_path, user_path
+try:
+    from ..Utils import local_path, user_path
+except ImportError:
+    from Utils import local_path, user_path
 
 local_folder = os.path.dirname(__file__)
 user_folder = user_path("worlds") if user_path() != local_path() else None
