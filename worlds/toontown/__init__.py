@@ -1,7 +1,7 @@
 from typing import Dict, Any, List
 
-from BaseClasses import Tutorial, Region, ItemClassification, Location, LocationProgressType
-from worlds.AutoWorld import World, WebWorld
+from ...BaseClasses import Tutorial, Region, ItemClassification, Location, LocationProgressType
+from ...worlds.AutoWorld import World, WebWorld
 
 from . import regions, consts
 from .consts import ToontownItem, ToontownLocation
@@ -55,10 +55,8 @@ class ToontownWorld(World):
         # Add location rules.
         for i, location_data in enumerate(self.created_locations):
             location: Location = self.multiworld.get_location(location_data.name.value, self.player)
-            location.access_rule = lambda state, i=i: test_location(
-                self.created_locations[i], state, self.multiworld, self.player, self.options)
-            location.item_rule = lambda item, i=i: test_item_location(
-                self.created_locations[i], item, self.multiworld, self.player, self.options)
+            location.access_rule = lambda state, i=i: test_location(self.created_locations[i], state, self.multiworld, self.player, self.options)
+            location.item_rule = lambda item, i=i: test_item_location(self.created_locations[i], item, self.multiworld, self.player, self.options)
 
         # Add entrance rules.
         for i, region_data in enumerate(REGION_DEFINITIONS):
@@ -163,7 +161,7 @@ class ToontownWorld(World):
 
         # Debug, use this to print a pretty picture to make sure our regions are set up correctly
         if DEBUG_MODE:
-            from Utils import visualize_regions
+            from ...Utils import visualize_regions
             visualize_regions(self.multiworld.get_region("Menu", self.player), "toontown.puml")
 
     def create_items(self) -> None:
